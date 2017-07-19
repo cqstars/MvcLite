@@ -1,0 +1,2 @@
+# MvcLite
+use mvc
