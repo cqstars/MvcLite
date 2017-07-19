@@ -1,0 +1,604 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="Parent" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="AreaName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ControllerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormMethod" Type="int" />
+          <Property Name="OperationType" Type="nchar" MaxLength="10" />
+          <Property Name="Ico" Type="nvarchar" MaxLength="50" />
+          <Property Name="PerMissionOrder" Type="int" />
+          <Property Name="IsLink" Type="bit" />
+          <Property Name="LinkUrl" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsShow" Type="bit" />
+          <Property Name="IsDel" Type="bit" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="RolePermissions">
+          <Key>
+            <PropertyRef Name="RolePerMissionID" />
+          </Key>
+          <Property Name="RolePerMissionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="PermissionID" Type="int" />
+          <Property Name="IsDel" Type="bit" />
+          <Property Name="AddTime" Type="datetime" />
+          <Property Name="DepartMentID" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="200" />
+          <Property Name="DeptmentID" Type="int" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsShow" Type="bit" />
+          <Property Name="IsDel" Type="bit" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserDB">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="20" />
+          <Property Name="PassWord" Type="nvarchar" MaxLength="20" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="20" />
+          <Property Name="Degree" Type="nvarchar" MaxLength="20" />
+          <Property Name="College" Type="nvarchar" MaxLength="50" />
+          <Property Name="QQ" Type="nvarchar" MaxLength="50" />
+          <Property Name="BirthDay" Type="datetime" />
+          <Property Name="Telphone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Pic" Type="nvarchar" MaxLength="50" />
+          <Property Name="Img" Type="nvarchar" MaxLength="50" />
+          <Property Name="Rights" Type="int" />
+          <Property Name="Brief" Type="nvarchar" MaxLength="50" />
+          <Property Name="Author" Type="nvarchar" MaxLength="50" />
+          <Property Name="Film" Type="nvarchar" MaxLength="50" />
+          <Property Name="Sex" Type="nchar" MaxLength="10" />
+          <Property Name="PosterNumber" Type="int" />
+          <Property Name="RegTime" Type="datetime" />
+          <Property Name="IsForumClass" Type="nchar" MaxLength="10" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="DepartID" Type="int" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="RoleID" Type="int" />
+          <Property Name="IsDel" Type="bit" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VipUserPermission">
+          <Key>
+            <PropertyRef Name="VipID" />
+          </Key>
+          <Property Name="VipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VipUserID" Type="int" />
+          <Property Name="VipPerMissionID" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDel" Type="bit" />
+          <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_RolePermissions_Permission">
+          <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
+          <End Role="RolePermissions" Type="Self.RolePermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="PermissionID" />
+            </Principal>
+            <Dependent Role="RolePermissions">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePermissions_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="RolePermissions" Type="Self.RolePermissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="RolePermissions">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserDB_DepartMent">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="UserDB" Type="Self.UserDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="UserDB">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VipUserPermission_Permission">
+          <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
+          <End Role="VipUserPermission" Type="Self.VipUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="PermissionID" />
+            </Principal>
+            <Dependent Role="VipUserPermission">
+              <PropertyRef Name="VipPerMissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VipUserPermission_UserDB">
+          <End Role="UserDB" Type="Self.UserDB" Multiplicity="0..1" />
+          <End Role="VipUserPermission" Type="Self.VipUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDB">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="VipUserPermission">
+              <PropertyRef Name="VipUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRole_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRole_UserDB">
+          <End Role="UserDB" Type="Self.UserDB" Multiplicity="0..1" />
+          <End Role="UserRole" Type="Self.UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDB">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HTModelStoreContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolePermissions" EntityType="Self.RolePermissions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDB" EntityType="Self.UserDB" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VipUserPermission" EntityType="Self.VipUserPermission" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_RolePermissions_Permission" Association="Self.FK_RolePermissions_Permission">
+            <End Role="Permission" EntitySet="Permission" />
+            <End Role="RolePermissions" EntitySet="RolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolePermissions_Roles" Association="Self.FK_RolePermissions_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="RolePermissions" EntitySet="RolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserDB_DepartMent" Association="Self.FK_UserDB_DepartMent">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="UserDB" EntitySet="UserDB" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VipUserPermission_Permission" Association="Self.FK_VipUserPermission_Permission">
+            <End Role="Permission" EntitySet="Permission" />
+            <End Role="VipUserPermission" EntitySet="VipUserPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VipUserPermission_UserDB" Association="Self.FK_VipUserPermission_UserDB">
+            <End Role="UserDB" EntitySet="UserDB" />
+            <End Role="VipUserPermission" EntitySet="VipUserPermission" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole_Roles" Association="Self.UserRole_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole_UserDB" Association="Self.UserRole_UserDB">
+            <End Role="UserDB" EntitySet="UserDB" />
+            <End Role="UserRole" EntitySet="UserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="HTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Departments" EntityType="HTModel.Department" />
+          <EntitySet Name="Permissions" EntityType="HTModel.Permission" />
+          <EntitySet Name="RolePermissions" EntityType="HTModel.RolePermission" />
+          <EntitySet Name="Roles" EntityType="HTModel.Role" />
+          <EntitySet Name="UserDBs" EntityType="HTModel.UserDB" />
+          <EntitySet Name="UserRoles" EntityType="HTModel.UserRole" />
+          <EntitySet Name="VipUserPermissions" EntityType="HTModel.VipUserPermission" />
+          <AssociationSet Name="FK_UserDB_DepartMent" Association="HTModel.FK_UserDB_DepartMent">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="UserDB" EntitySet="UserDBs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolePermissions_Permission" Association="HTModel.FK_RolePermissions_Permission">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="RolePermission" EntitySet="RolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VipUserPermission_Permission" Association="HTModel.FK_VipUserPermission_Permission">
+            <End Role="Permission" EntitySet="Permissions" />
+            <End Role="VipUserPermission" EntitySet="VipUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RolePermissions_Roles" Association="HTModel.FK_RolePermissions_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="RolePermission" EntitySet="RolePermissions" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole_Roles" Association="HTModel.UserRole_Roles">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VipUserPermission_UserDB" Association="HTModel.FK_VipUserPermission_UserDB">
+            <End Role="UserDB" EntitySet="UserDBs" />
+            <End Role="VipUserPermission" EntitySet="VipUserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="UserRole_UserDB" Association="HTModel.UserRole_UserDB">
+            <End Role="UserDB" EntitySet="UserDBs" />
+            <End Role="UserRole" EntitySet="UserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserDBs" Relationship="HTModel.FK_UserDB_DepartMent" FromRole="Department" ToRole="UserDB" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="PermissionID" />
+          </Key>
+          <Property Name="PermissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Parent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AreaName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormMethod" Type="Int32" />
+          <Property Name="OperationType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Ico" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PerMissionOrder" Type="Int32" />
+          <Property Name="IsLink" Type="Boolean" />
+          <Property Name="LinkUrl" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsShow" Type="Boolean" />
+          <Property Name="IsDel" Type="Boolean" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RolePermissions" Relationship="HTModel.FK_RolePermissions_Permission" FromRole="Permission" ToRole="RolePermission" />
+          <NavigationProperty Name="VipUserPermissions" Relationship="HTModel.FK_VipUserPermission_Permission" FromRole="Permission" ToRole="VipUserPermission" />
+        </EntityType>
+        <EntityType Name="RolePermission">
+          <Key>
+            <PropertyRef Name="RolePerMissionID" />
+          </Key>
+          <Property Name="RolePerMissionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="PermissionID" Type="Int32" />
+          <Property Name="IsDel" Type="Boolean" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <Property Name="DepartMentID" Type="Int32" />
+          <NavigationProperty Name="Permission" Relationship="HTModel.FK_RolePermissions_Permission" FromRole="RolePermission" ToRole="Permission" />
+          <NavigationProperty Name="Role" Relationship="HTModel.FK_RolePermissions_Roles" FromRole="RolePermission" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DeptmentID" Type="Int32" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsShow" Type="Boolean" />
+          <Property Name="IsDel" Type="Boolean" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="RolePermissions" Relationship="HTModel.FK_RolePermissions_Roles" FromRole="Role" ToRole="RolePermission" />
+          <NavigationProperty Name="UserRoles" Relationship="HTModel.UserRole_Roles" FromRole="Role" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserDB">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="PassWord" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NickName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Degree" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="College" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="QQ" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDay" Type="DateTime" Precision="3" />
+          <Property Name="Telphone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Pic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Rights" Type="Int32" />
+          <Property Name="Brief" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Film" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PosterNumber" Type="Int32" />
+          <Property Name="RegTime" Type="DateTime" Precision="3" />
+          <Property Name="IsForumClass" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DepartID" Type="Int32" />
+          <NavigationProperty Name="Department" Relationship="HTModel.FK_UserDB_DepartMent" FromRole="UserDB" ToRole="Department" />
+          <NavigationProperty Name="VipUserPermissions" Relationship="HTModel.FK_VipUserPermission_UserDB" FromRole="UserDB" ToRole="VipUserPermission" />
+          <NavigationProperty Name="UserRoles" Relationship="HTModel.UserRole_UserDB" FromRole="UserDB" ToRole="UserRole" />
+        </EntityType>
+        <EntityType Name="UserRole">
+          <Key>
+            <PropertyRef Name="UserRoleID" />
+          </Key>
+          <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="RoleID" Type="Int32" />
+          <Property Name="IsDel" Type="Boolean" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Role" Relationship="HTModel.UserRole_Roles" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="UserDB" Relationship="HTModel.UserRole_UserDB" FromRole="UserRole" ToRole="UserDB" />
+        </EntityType>
+        <EntityType Name="VipUserPermission">
+          <Key>
+            <PropertyRef Name="VipID" />
+          </Key>
+          <Property Name="VipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VipUserID" Type="Int32" />
+          <Property Name="VipPerMissionID" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsDel" Type="Boolean" />
+          <Property Name="AddTime" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Permission" Relationship="HTModel.FK_VipUserPermission_Permission" FromRole="VipUserPermission" ToRole="Permission" />
+          <NavigationProperty Name="UserDB" Relationship="HTModel.FK_VipUserPermission_UserDB" FromRole="VipUserPermission" ToRole="UserDB" />
+        </EntityType>
+        <Association Name="FK_UserDB_DepartMent">
+          <End Type="HTModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="HTModel.UserDB" Role="UserDB" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="UserDB">
+              <PropertyRef Name="DepartID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePermissions_Permission">
+          <End Type="HTModel.Permission" Role="Permission" Multiplicity="0..1" />
+          <End Type="HTModel.RolePermission" Role="RolePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="PermissionID" />
+            </Principal>
+            <Dependent Role="RolePermission">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VipUserPermission_Permission">
+          <End Type="HTModel.Permission" Role="Permission" Multiplicity="0..1" />
+          <End Type="HTModel.VipUserPermission" Role="VipUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="PermissionID" />
+            </Principal>
+            <Dependent Role="VipUserPermission">
+              <PropertyRef Name="VipPerMissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RolePermissions_Roles">
+          <End Type="HTModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="HTModel.RolePermission" Role="RolePermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="RolePermission">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRole_Roles">
+          <End Type="HTModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="HTModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VipUserPermission_UserDB">
+          <End Type="HTModel.UserDB" Role="UserDB" Multiplicity="0..1" />
+          <End Type="HTModel.VipUserPermission" Role="VipUserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDB">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="VipUserPermission">
+              <PropertyRef Name="VipUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserRole_UserDB">
+          <End Type="HTModel.UserDB" Role="UserDB" Multiplicity="0..1" />
+          <End Type="HTModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserDB">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserRole">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="HTModelStoreContainer" CdmEntityContainer="HTEntities">
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="HTModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="HTModel.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+                <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+                <ScalarProperty Name="IsLink" ColumnName="IsLink" />
+                <ScalarProperty Name="PerMissionOrder" ColumnName="PerMissionOrder" />
+                <ScalarProperty Name="Ico" ColumnName="Ico" />
+                <ScalarProperty Name="OperationType" ColumnName="OperationType" />
+                <ScalarProperty Name="FormMethod" ColumnName="FormMethod" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Parent" ColumnName="Parent" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolePermissions">
+            <EntityTypeMapping TypeName="HTModel.RolePermission">
+              <MappingFragment StoreEntitySet="RolePermissions">
+                <ScalarProperty Name="DepartMentID" ColumnName="DepartMentID" />
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RolePerMissionID" ColumnName="RolePerMissionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="HTModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="IsShow" ColumnName="IsShow" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="DeptmentID" ColumnName="DeptmentID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDBs">
+            <EntityTypeMapping TypeName="HTModel.UserDB">
+              <MappingFragment StoreEntitySet="UserDB">
+                <ScalarProperty Name="DepartID" ColumnName="DepartID" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="IsForumClass" ColumnName="IsForumClass" />
+                <ScalarProperty Name="RegTime" ColumnName="RegTime" />
+                <ScalarProperty Name="PosterNumber" ColumnName="PosterNumber" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Film" ColumnName="Film" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Brief" ColumnName="Brief" />
+                <ScalarProperty Name="Rights" ColumnName="Rights" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="Telphone" ColumnName="Telphone" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="QQ" ColumnName="QQ" />
+                <ScalarProperty Name="College" ColumnName="College" />
+                <ScalarProperty Name="Degree" ColumnName="Degree" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="PassWord" ColumnName="PassWord" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoles">
+            <EntityTypeMapping TypeName="HTModel.UserRole">
+              <MappingFragment StoreEntitySet="UserRole">
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VipUserPermissions">
+            <EntityTypeMapping TypeName="HTModel.VipUserPermission">
+              <MappingFragment StoreEntitySet="VipUserPermission">
+                <ScalarProperty Name="AddTime" ColumnName="AddTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="VipPerMissionID" ColumnName="VipPerMissionID" />
+                <ScalarProperty Name="VipUserID" ColumnName="VipUserID" />
+                <ScalarProperty Name="VipID" ColumnName="VipID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

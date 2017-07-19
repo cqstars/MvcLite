@@ -1,0 +1,144 @@
+﻿@model Model.ViewModel.LoginUser
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HayTn后台管理系统登录</title>
+    @Styles.Render("~/BootStarp/CSS")
+   @Scripts.Render("~/BootStrap/js")
+</head>
+<body>
+    <div class="jumbotron">
+
+        
+        <div class="container">
+            <h1>
+                <img src="~/Images/logo/logo_S.png" class="img-responsive" />HayTn后台管理系统登录</h1>
+            <p></p>
+            <div class="row">
+
+
+                <div class="col-md-offset-3 col-md-6">
+                    <div class="well well_L">
+                        @using (Ajax.BeginForm("AdminLogin", "HayTnAdmin/Admin", new AjaxOptions
+                        {
+                            HttpMethod = "Post",
+                            OnSuccess = "Success",
+                            LoadingElementId = "Waiting"
+
+                        }, new { @class = "form-horizontal", role = "form" }))
+                        {
+
+                            <div class="form-group">
+                                <label for="LoginName" class="col-sm-3 control-label">用户名：</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(u => u.LoginName, new { Value = "peter", @class = "form-control" })@Html.ValidationMessageFor(u => u.LoginName,null, new { @class= "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="Pwd" class="col-sm-3 control-label">密码：</label>
+                                <div class="col-sm-9">
+
+                                    @Html.PasswordFor(u => u.Pwd, new { Value = "", @class = "form-control" })@Html.ValidationMessageFor(u => u.Pwd, null, new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+
+                                    <div class="checkbox">
+                                        <label>
+                                            @Html.CheckBoxFor(u => u.IsAlways) 保存密码
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    @* <button type="submit" class="btn btn-default">登录</button><span id="Waiting">
+                                            <img src="~/Images/ajax-loader.gif" />
+                                        </span>*@
+                                    <button type="submit" id="myButton" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+                                        登录
+                                    </button>
+                                    <script>
+                                        $('#myButton').on('click', function () {
+
+                                            var $btn = $(this).button('loading')
+                                            // business logic...
+                                            $btn.button('reset')
+                                        })
+                                    </script>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</div>
+    
+        <section id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <address>
+                            <strong>重庆海顿科技有限公司 </strong><br>
+
+                            <abbr title="Phone"><i class="iconfont text-danger">&#xe629;</i>联系人：向先生&nbsp;&nbsp;手机：1363-7777-865</abbr><br><i class="iconfont text-info">&#xe618;</i>023-传真：023-<br />
+                            <i class="iconfont text-danger">&#xe61a;</i>
+                            <a href="mailto:#">20634529@qq.com</a>
+                            <br />
+                            <i class="iconfont text-success">&#xe619;</i> 重庆市九龙坡区石桥铺华宇名都29号楼
+                        </address>
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <!--底部导航-->
+                        <div class="row text-center">
+                            <ul class="list-inline">
+                             
+
+                                <!--<li><a href="javascript{void(0)}"><i class="iconfont text-info">&#xe610;</i></a></li>
+                            <li><a href="javascript{void(0)}"><i class="iconfont text-danger">&#xe611;</i></a></li>
+                            <li><a href="javascript{void(0)}"><i class="iconfont text-primary">&#xe60f;</i></a></li>-->
+                                <li></li>
+                            </ul>
+
+
+                            <p>Copyright©&nbsp;&nbsp;All Rights Reserved&nbsp;&nbsp;<a href="http://www.cqgdbg.com/">海顿科技</a></p>
+                            <p>渝ICP备12002506号-5</p>
+                            <!--<a href="javascript{void(0)}"></a>-->
+                        </div>
+                        <!--底部导航-->
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    
+        <script type="text/javascript">
+            function Success(jsonData) {
+                $.procAjaxData(jsonData, function () { window.location = jsonData.BackUrl; });
+            }
+        </script>
+
+</body>
+</html>

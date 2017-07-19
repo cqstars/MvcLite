@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title海顿物联网管理系统</title>
+    @Styles.Render("~/MyCss/CSS")
+    @Scripts.Render("~/Myjs/js")
+
+    <script src="~/Scripts/iconfont.js"></script>
+</head>
+<body>
+    <div class="head clearfix">
+        
+        <div class="headlogo left">
+            <h5>
+                <img src="~/Images/logo/Title_Logo.png" /></h5>
+        </div>
+       
+        <ul class="left headnav" id="headnav">
+            <li id="menu_0" class="current-menu">
+                <a href="#">菜单管理</a>
+            </li>
+            <li id="menu_1">
+                <a href="#">模块管理</a>
+            </li>
+            <li id="menu_2">
+                <a href="#">系统设置</a>
+            </li>
+            <li id="menu_3">
+                <a href="#">扩展管理</a>
+            </li>
+        </ul>
+        <ul class="headlink right clearfix">
+            <li id="link_0">
+                <a href="#">&nbsp;&nbsp;你好，admin</a>
+            </li>
+            <li id="link_1">
+                <a href="#">隐藏菜单</a>
+            </li>
+            <li id="link_2">
+                <a href="#">首页</a>
+            </li>
+            <li id="link_3">
+                <a href="#">帮助</a>
+            </li>
+            <li id="link_4">
+                <a href="#">退出</a>
+            </li>
+        </ul>
+    </div><!--end head-->
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+
+        
+    </div>
+
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
