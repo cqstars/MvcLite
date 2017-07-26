@@ -12,24 +12,21 @@ namespace Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class Volume
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Role()
+        public Volume()
         {
-            this.UserRoles = new HashSet<UserRole>();
+            this.Poetries = new HashSet<Poetry>();
+            this.Subsections = new HashSet<Subsection>();
         }
     
-        public int RoleID { get; set; }
-        public string Description { get; set; }
-        public Nullable<int> DeptmentID { get; set; }
-        public string RoleName { get; set; }
-        public string Remark { get; set; }
-        public Nullable<bool> IsShow { get; set; }
-        public Nullable<bool> IsDel { get; set; }
-        public Nullable<System.DateTime> AddTime { get; set; }
+        public int VolumeID { get; set; }
+        public string VolumeName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserRole> UserRoles { get; set; }
+        public virtual ICollection<Poetry> Poetries { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Subsection> Subsections { get; set; }
     }
 }

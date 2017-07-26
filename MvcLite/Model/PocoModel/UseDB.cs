@@ -24,7 +24,7 @@ namespace Model
                 UserName = this.UserName,
                 PassWord = this.PassWord,
                 Sex = this.Sex,
-                NickName=this.NickName
+                NickName = this.NickName
                 //= this.,
                 // uDepId = this.uDepId,
                 // uLoginName = this.uLoginName,
@@ -36,6 +36,7 @@ namespace Model
                 // uAddTime = this.uAddTime
             };
             return poco;
+
         }
     }
 }

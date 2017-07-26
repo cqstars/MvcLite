@@ -13,10 +13,10 @@ namespace Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class HTEntities : DbContext
+    public partial class tang_poetryEntities : DbContext
     {
-        public HTEntities()
-            : base("name=HTEntities")
+        public tang_poetryEntities()
+            : base("name=tang_poetryEntities")
         {
         }
     
@@ -25,6 +25,10 @@ namespace Model
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Poet> Poets { get; set; }
+        public virtual DbSet<Poetry> Poetries { get; set; }
+        public virtual DbSet<Subsection> Subsections { get; set; }
+        public virtual DbSet<Volume> Volumes { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<RolePermission> RolePermissions { get; set; }

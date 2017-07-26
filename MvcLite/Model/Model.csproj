@@ -51,76 +51,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Department.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+      <DependentUpon>Literature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Literature.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Literature.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Literature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Literature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Literature.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Literature.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Permission.cs">
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
     <Compile Include="PocoModel\Permission.cs" />
     <Compile Include="PocoModel\UseDB.cs" />
     <Compile Include="FormatModel\AjaxMsgModel.cs" />
-    <Compile Include="HT.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HT.Context.tt</DependentUpon>
+    <Compile Include="Poet.cs">
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
-    <Compile Include="HT.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HT.tt</DependentUpon>
-    </Compile>
-    <Compile Include="HT.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>HT.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Permission.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+    <Compile Include="Poetry.cs">
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
     <Compile Include="RolePermission.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+      <DependentUpon>Literature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subsection.cs">
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
     <Compile Include="UserDB.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
     <Compile Include="UserRole.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\LoginUser.cs" />
     <Compile Include="VipUserPermission.cs">
-      <DependentUpon>HT.tt</DependentUpon>
+      <DependentUpon>Literature.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Volume.cs">
+      <DependentUpon>Literature.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DTOModel\" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="HT.edmx">
+    <EntityDeploy Include="Literature.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>HT.Designer.cs</LastGenOutput>
+      <LastGenOutput>Literature.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="App.Config" />
-    <None Include="HT.edmx.diagram">
-      <DependentUpon>HT.edmx</DependentUpon>
+    <None Include="Literature.edmx.diagram">
+      <DependentUpon>Literature.edmx</DependentUpon>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="HT.Context.tt">
+    <Content Include="Literature.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HT.edmx</DependentUpon>
-      <LastGenOutput>HT.Context.cs</LastGenOutput>
+      <DependentUpon>Literature.edmx</DependentUpon>
+      <LastGenOutput>Literature.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="HT.tt">
+    <Content Include="Literature.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>HT.edmx</DependentUpon>
-      <LastGenOutput>HT.cs</LastGenOutput>
+      <DependentUpon>Literature.edmx</DependentUpon>
+      <LastGenOutput>Literature.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

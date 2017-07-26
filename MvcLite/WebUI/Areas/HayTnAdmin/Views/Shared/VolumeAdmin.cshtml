@@ -1,0 +1,125 @@
+﻿<link href="~/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<link href="~/Content/pageinit.css" rel="stylesheet" />
+<script src="~/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+<script src="~/Scripts/mustache.min.js"></script>
+<script src="~/Scripts/pagination.js"></script>
+<div class="row">
+    <div class="col-lg-12">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading">
+                <span>
+                    <button type="button" class="btn btn-default btn-sm glyphicon glyphicon glyphicon-th-list" href="javascript:void{0}" onclick="VolumeList()">
+                        卷列表
+                    </button>
+                </span>
+                <span class="ui-button">
+                    <a class="btn btn-success btn-sm glyphicon glyphicon-plus" id="VolumeADD" href="javascript:void{0}" data-type="text" data-pk="100" data-url="Poet/VolumeADD" data-title="添加卷名">添加</a>
+                </span>
+
+                <span class="ui-button">
+                    <a class="btn btn-warning btn-sm glyphicon glyphicon-edit" href="../AddEduInfo/AddEduInfo">修改</a>
+                </span>
+
+                >
+            </div>
+            <div class="panel-body">
+                <table class="table table-condensed table-bordered" style="font-size:12px;text-align:center;">
+                    <thead>
+                        <tr class="info">
+                            <th></th>
+                            <th>卷名</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Volumetable"></tbody>
+                </table>
+                <div class="page">
+                    <div id="Pagination" class="quotes"></div>
+                </div>
+            </div>
+
+            <!-- Table -->
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#Volumetable").editable({
+            selector: ".ModifyVolume"
+        });
+        $('#VolumeADD').editable({
+            display: false,
+            success: function (response, newValue) {
+                //var itemTmpl = $('#tmpl1').html();//将模板带入
+                //$("#Volumetable").html(Mustache.render(itemTmpl, response));
+                VolumeList();
+            }
+        });
+    });
+    function VolumeList()
+    {
+        $.ajax({
+            type: "POST",
+            url: "Poet/VolumeTotalPage",
+            success: function (msg) {
+                var pageIndex = 0;     //页面索引初始值
+                var pageSize = 10;     //每页显示条数初始化，修改显示条数，修改这里即可
+                InitTable(0);    //Load事件，初始化表格数据，页面索引为0（第一页）
+                //分页，PageCount是总条目数，这是必选参数，其它参数都是可选
+                $("#Pagination").pagination(msg, {
+                    callback: PageCallback,  //PageCallback() 为翻页调用次函数。
+                    prev_text: "« 上一页",
+                    next_text: "下一页 »",
+                    items_per_page: pageSize,
+                    num_edge_entries: 2,       //两侧首尾分页条目数
+                    num_display_entries: 6,    //连续分页主体部分分页条目数
+                    current_page: pageIndex   //当前页索引
+                });
+                //翻页调用
+                function PageCallback(index, jq) {
+
+                    InitTable(index);
+                }
+                //请求数据
+                function InitTable(pageIndex) {
+
+                    $.ajax({
+                        type: "POST",
+                        // dataType: "text",
+                        url: 'Poet/VolumeListByPage',      //提交到一般处理程序请求数据
+                        data: "pageIndex=" + (pageIndex) + "&pageSize=" + pageSize,          //提交两个参数：pageIndex(页面索引)，pageSize(显示条数)
+                        success: function (msg) {
+                            var itemTmpl = $('#tmpl1').html();//将模板带入
+                            $("#Volumetable").html(Mustache.render(itemTmpl, msg));
+
+                        }
+                    });
+
+                }
+
+            }
+        });
+    }
+</script>
+<script id="tmpl1" type="text-x-mustache-tmpl">
+    {{#VolumeList}}
+    <tr>
+        <td></td>
+        <td>
+            
+                <a class="ModifyVolume "  href="javascript:void{0}" data-type="text" data-pk="{{VolumeID}}" data-url="Poet/VolumeModify" data-title="修改卷名">{{VolumeName}}</a>
+            
+        </td>
+        <td>
+            <span>
+                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-minus">
+                    删除
+                </button>
+            </span>
+        </td>
+    </tr>{{/VolumeList}}
+</script>

@@ -22,6 +22,5 @@ namespace Model
         public Nullable<int> DepartMentID { get; set; }
     
         public virtual Permission Permission { get; set; }
-        public virtual Role Role { get; set; }
     }
 }

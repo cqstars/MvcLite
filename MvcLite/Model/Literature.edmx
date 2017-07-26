@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="HTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="tang_poetryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -33,6 +33,30 @@
           <Property Name="IsDel" Type="bit" />
           <Property Name="AddTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Poet">
+          <Key>
+            <PropertyRef Name="PoetID" />
+          </Key>
+          <Property Name="PoetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PoetName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PoetImg" Type="nvarchar" MaxLength="50" />
+          <Property Name="PoetBirthDay" Type="datetime" />
+          <Property Name="PoetDieDay" Type="datetime" />
+          <Property Name="PoetBrife" Type="nvarchar(max)" />
+          <Property Name="poetryID" Type="int" />
+        </EntityType>
+        <EntityType Name="Poetry">
+          <Key>
+            <PropertyRef Name="PoetryID" />
+          </Key>
+          <Property Name="PoetryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PoetryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PoetryContent" Type="nvarchar(max)" />
+          <Property Name="PoetryImg" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubsectionID" Type="int" />
+          <Property Name="PoetID" Type="int" />
+          <Property Name="VolumeID" Type="int" />
+        </EntityType>
         <EntityType Name="RolePermissions">
           <Key>
             <PropertyRef Name="RolePerMissionID" />
@@ -56,6 +80,16 @@
           <Property Name="IsShow" Type="bit" />
           <Property Name="IsDel" Type="bit" />
           <Property Name="AddTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Subsection">
+          <Key>
+            <PropertyRef Name="SubsectionID" />
+          </Key>
+          <Property Name="SubsectionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SubsectionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="VolumeID" Type="int" />
+          <Property Name="PoetID" Type="int" />
+          <Property Name="PoetryID" Type="int" />
         </EntityType>
         <EntityType Name="UserDB">
           <Key>
@@ -105,6 +139,49 @@
           <Property Name="IsDel" Type="bit" />
           <Property Name="AddTime" Type="datetime" />
         </EntityType>
+        <EntityType Name="Volume">
+          <Key>
+            <PropertyRef Name="VolumeID" />
+          </Key>
+          <Property Name="VolumeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VolumeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Poetry_Poet">
+          <End Role="Poet" Type="Self.Poet" Multiplicity="0..1" />
+          <End Role="Poetry" Type="Self.Poetry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poet">
+              <PropertyRef Name="PoetID" />
+            </Principal>
+            <Dependent Role="Poetry">
+              <PropertyRef Name="PoetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poetry_Subsection">
+          <End Role="Subsection" Type="Self.Subsection" Multiplicity="0..1" />
+          <End Role="Poetry" Type="Self.Poetry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsection">
+              <PropertyRef Name="SubsectionID" />
+            </Principal>
+            <Dependent Role="Poetry">
+              <PropertyRef Name="SubsectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poetry_Volume">
+          <End Role="Volume" Type="Self.Volume" Multiplicity="0..1" />
+          <End Role="Poetry" Type="Self.Poetry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volume">
+              <PropertyRef Name="VolumeID" />
+            </Principal>
+            <Dependent Role="Poetry">
+              <PropertyRef Name="VolumeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RolePermissions_Permission">
           <End Role="Permission" Type="Self.Permission" Multiplicity="0..1" />
           <End Role="RolePermissions" Type="Self.RolePermissions" Multiplicity="*" />
@@ -117,15 +194,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolePermissions_Roles">
-          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
-          <End Role="RolePermissions" Type="Self.RolePermissions" Multiplicity="*" />
+        <Association Name="FK_Subsection_Poet">
+          <End Role="Poet" Type="Self.Poet" Multiplicity="0..1" />
+          <End Role="Subsection" Type="Self.Subsection" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
-              <PropertyRef Name="RoleID" />
+            <Principal Role="Poet">
+              <PropertyRef Name="PoetID" />
             </Principal>
-            <Dependent Role="RolePermissions">
-              <PropertyRef Name="RoleID" />
+            <Dependent Role="Subsection">
+              <PropertyRef Name="PoetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subsection_Volume">
+          <End Role="Volume" Type="Self.Volume" Multiplicity="0..1" />
+          <End Role="Subsection" Type="Self.Subsection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volume">
+              <PropertyRef Name="VolumeID" />
+            </Principal>
+            <Dependent Role="Subsection">
+              <PropertyRef Name="VolumeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -189,21 +278,41 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="HTModelStoreContainer">
+        <EntityContainer Name="tang_poetryModelStoreContainer">
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poet" EntityType="Self.Poet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poetry" EntityType="Self.Poetry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RolePermissions" EntityType="Self.RolePermissions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subsection" EntityType="Self.Subsection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDB" EntityType="Self.UserDB" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VipUserPermission" EntityType="Self.VipUserPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Volume" EntityType="Self.Volume" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Poetry_Poet" Association="Self.FK_Poetry_Poet">
+            <End Role="Poet" EntitySet="Poet" />
+            <End Role="Poetry" EntitySet="Poetry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poetry_Subsection" Association="Self.FK_Poetry_Subsection">
+            <End Role="Subsection" EntitySet="Subsection" />
+            <End Role="Poetry" EntitySet="Poetry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poetry_Volume" Association="Self.FK_Poetry_Volume">
+            <End Role="Volume" EntitySet="Volume" />
+            <End Role="Poetry" EntitySet="Poetry" />
+          </AssociationSet>
           <AssociationSet Name="FK_RolePermissions_Permission" Association="Self.FK_RolePermissions_Permission">
             <End Role="Permission" EntitySet="Permission" />
             <End Role="RolePermissions" EntitySet="RolePermissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolePermissions_Roles" Association="Self.FK_RolePermissions_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="RolePermissions" EntitySet="RolePermissions" />
+          <AssociationSet Name="FK_Subsection_Poet" Association="Self.FK_Subsection_Poet">
+            <End Role="Poet" EntitySet="Poet" />
+            <End Role="Subsection" EntitySet="Subsection" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subsection_Volume" Association="Self.FK_Subsection_Volume">
+            <End Role="Volume" EntitySet="Volume" />
+            <End Role="Subsection" EntitySet="Subsection" />
           </AssociationSet>
           <AssociationSet Name="FK_UserDB_DepartMent" Association="Self.FK_UserDB_DepartMent">
             <End Role="Department" EntitySet="Department" />
@@ -229,40 +338,171 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="HTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="HTEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Departments" EntityType="HTModel.Department" />
-          <EntitySet Name="Permissions" EntityType="HTModel.Permission" />
-          <EntitySet Name="RolePermissions" EntityType="HTModel.RolePermission" />
-          <EntitySet Name="Roles" EntityType="HTModel.Role" />
-          <EntitySet Name="UserDBs" EntityType="HTModel.UserDB" />
-          <EntitySet Name="UserRoles" EntityType="HTModel.UserRole" />
-          <EntitySet Name="VipUserPermissions" EntityType="HTModel.VipUserPermission" />
-          <AssociationSet Name="FK_UserDB_DepartMent" Association="HTModel.FK_UserDB_DepartMent">
+      <Schema Namespace="tang_poetryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Poet">
+          <Key>
+            <PropertyRef Name="PoetID" />
+          </Key>
+          <Property Name="PoetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PoetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PoetImg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PoetBirthDay" Type="DateTime" Precision="3" />
+          <Property Name="PoetDieDay" Type="DateTime" Precision="3" />
+          <Property Name="PoetBrife" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="poetryID" Type="Int32" />
+          <NavigationProperty Name="Poetries" Relationship="Self.FK_Poetry_Poet" FromRole="Poet" ToRole="Poetry" />
+          <NavigationProperty Name="Subsections" Relationship="Self.FK_Subsection_Poet" FromRole="Poet" ToRole="Subsection" />
+        </EntityType>
+        <EntityType Name="Poetry">
+          <Key>
+            <PropertyRef Name="PoetryID" />
+          </Key>
+          <Property Name="PoetryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PoetryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PoetryContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PoetryImg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubsectionID" Type="Int32" />
+          <Property Name="PoetID" Type="Int32" />
+          <Property Name="VolumeID" Type="Int32" />
+          <NavigationProperty Name="Poet" Relationship="Self.FK_Poetry_Poet" FromRole="Poetry" ToRole="Poet" />
+          <NavigationProperty Name="Subsection" Relationship="Self.FK_Poetry_Subsection" FromRole="Poetry" ToRole="Subsection" />
+          <NavigationProperty Name="Volume" Relationship="Self.FK_Poetry_Volume" FromRole="Poetry" ToRole="Volume" />
+        </EntityType>
+        <EntityType Name="Subsection">
+          <Key>
+            <PropertyRef Name="SubsectionID" />
+          </Key>
+          <Property Name="SubsectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SubsectionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="VolumeID" Type="Int32" />
+          <Property Name="PoetID" Type="Int32" />
+          <Property Name="PoetryID" Type="Int32" />
+          <NavigationProperty Name="Poet" Relationship="Self.FK_Subsection_Poet" FromRole="Subsection" ToRole="Poet" />
+          <NavigationProperty Name="Poetries" Relationship="Self.FK_Poetry_Subsection" FromRole="Subsection" ToRole="Poetry" />
+          <NavigationProperty Name="Volume" Relationship="Self.FK_Subsection_Volume" FromRole="Subsection" ToRole="Volume" />
+        </EntityType>
+        <EntityType Name="Volume">
+          <Key>
+            <PropertyRef Name="VolumeID" />
+          </Key>
+          <Property Name="VolumeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VolumeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Poetries" Relationship="Self.FK_Poetry_Volume" FromRole="Volume" ToRole="Poetry" />
+          <NavigationProperty Name="Subsections" Relationship="Self.FK_Subsection_Volume" FromRole="Volume" ToRole="Subsection" />
+        </EntityType>
+        <Association Name="FK_Poetry_Poet">
+          <End Role="Poet" Type="Self.Poet" Multiplicity="0..1" />
+          <End Role="Poetry" Type="Self.Poetry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poet">
+              <PropertyRef Name="PoetID" />
+            </Principal>
+            <Dependent Role="Poetry">
+              <PropertyRef Name="PoetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subsection_Poet">
+          <End Role="Poet" Type="Self.Poet" Multiplicity="0..1" />
+          <End Role="Subsection" Type="Self.Subsection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poet">
+              <PropertyRef Name="PoetID" />
+            </Principal>
+            <Dependent Role="Subsection">
+              <PropertyRef Name="PoetID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poetry_Subsection">
+          <End Role="Subsection" Type="Self.Subsection" Multiplicity="0..1" />
+          <End Role="Poetry" Type="Self.Poetry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subsection">
+              <PropertyRef Name="SubsectionID" />
+            </Principal>
+            <Dependent Role="Poetry">
+              <PropertyRef Name="SubsectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Poetry_Volume">
+          <End Role="Volume" Type="Self.Volume" Multiplicity="0..1" />
+          <End Role="Poetry" Type="Self.Poetry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volume">
+              <PropertyRef Name="VolumeID" />
+            </Principal>
+            <Dependent Role="Poetry">
+              <PropertyRef Name="VolumeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Subsection_Volume">
+          <End Role="Volume" Type="Self.Volume" Multiplicity="0..1" />
+          <End Role="Subsection" Type="Self.Subsection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Volume">
+              <PropertyRef Name="VolumeID" />
+            </Principal>
+            <Dependent Role="Subsection">
+              <PropertyRef Name="VolumeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="tang_poetryEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Poets" EntityType="Self.Poet" />
+          <EntitySet Name="Poetries" EntityType="Self.Poetry" />
+          <EntitySet Name="Subsections" EntityType="Self.Subsection" />
+          <EntitySet Name="Volumes" EntityType="Self.Volume" />
+          <AssociationSet Name="FK_Poetry_Poet" Association="Self.FK_Poetry_Poet">
+            <End Role="Poet" EntitySet="Poets" />
+            <End Role="Poetry" EntitySet="Poetries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subsection_Poet" Association="Self.FK_Subsection_Poet">
+            <End Role="Poet" EntitySet="Poets" />
+            <End Role="Subsection" EntitySet="Subsections" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poetry_Subsection" Association="Self.FK_Poetry_Subsection">
+            <End Role="Subsection" EntitySet="Subsections" />
+            <End Role="Poetry" EntitySet="Poetries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Poetry_Volume" Association="Self.FK_Poetry_Volume">
+            <End Role="Volume" EntitySet="Volumes" />
+            <End Role="Poetry" EntitySet="Poetries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Subsection_Volume" Association="Self.FK_Subsection_Volume">
+            <End Role="Volume" EntitySet="Volumes" />
+            <End Role="Subsection" EntitySet="Subsections" />
+          </AssociationSet>
+          <EntitySet Name="Departments" EntityType="tang_poetryModel.Department" />
+          <EntitySet Name="Permissions" EntityType="tang_poetryModel.Permission" />
+          <EntitySet Name="RolePermissions" EntityType="tang_poetryModel.RolePermission" />
+          <EntitySet Name="Roles" EntityType="tang_poetryModel.Role" />
+          <EntitySet Name="UserDBs" EntityType="tang_poetryModel.UserDB" />
+          <EntitySet Name="UserRoles" EntityType="tang_poetryModel.UserRole" />
+          <EntitySet Name="VipUserPermissions" EntityType="tang_poetryModel.VipUserPermission" />
+          <AssociationSet Name="FK_UserDB_DepartMent" Association="tang_poetryModel.FK_UserDB_DepartMent">
             <End Role="Department" EntitySet="Departments" />
             <End Role="UserDB" EntitySet="UserDBs" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolePermissions_Permission" Association="HTModel.FK_RolePermissions_Permission">
+          <AssociationSet Name="FK_RolePermissions_Permission" Association="tang_poetryModel.FK_RolePermissions_Permission">
             <End Role="Permission" EntitySet="Permissions" />
             <End Role="RolePermission" EntitySet="RolePermissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_VipUserPermission_Permission" Association="HTModel.FK_VipUserPermission_Permission">
+          <AssociationSet Name="FK_VipUserPermission_Permission" Association="tang_poetryModel.FK_VipUserPermission_Permission">
             <End Role="Permission" EntitySet="Permissions" />
             <End Role="VipUserPermission" EntitySet="VipUserPermissions" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolePermissions_Roles" Association="HTModel.FK_RolePermissions_Roles">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="RolePermission" EntitySet="RolePermissions" />
-          </AssociationSet>
-          <AssociationSet Name="UserRole_Roles" Association="HTModel.UserRole_Roles">
+          <AssociationSet Name="UserRole_Roles" Association="tang_poetryModel.UserRole_Roles">
             <End Role="Role" EntitySet="Roles" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
-          <AssociationSet Name="FK_VipUserPermission_UserDB" Association="HTModel.FK_VipUserPermission_UserDB">
+          <AssociationSet Name="FK_VipUserPermission_UserDB" Association="tang_poetryModel.FK_VipUserPermission_UserDB">
             <End Role="UserDB" EntitySet="UserDBs" />
             <End Role="VipUserPermission" EntitySet="VipUserPermissions" />
           </AssociationSet>
-          <AssociationSet Name="UserRole_UserDB" Association="HTModel.UserRole_UserDB">
+          <AssociationSet Name="UserRole_UserDB" Association="tang_poetryModel.UserRole_UserDB">
             <End Role="UserDB" EntitySet="UserDBs" />
             <End Role="UserRole" EntitySet="UserRoles" />
           </AssociationSet>
@@ -273,7 +513,7 @@
           </Key>
           <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserDBs" Relationship="HTModel.FK_UserDB_DepartMent" FromRole="Department" ToRole="UserDB" />
+          <NavigationProperty Name="UserDBs" Relationship="tang_poetryModel.FK_UserDB_DepartMent" FromRole="Department" ToRole="UserDB" />
         </EntityType>
         <EntityType Name="Permission">
           <Key>
@@ -295,8 +535,8 @@
           <Property Name="IsShow" Type="Boolean" />
           <Property Name="IsDel" Type="Boolean" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="RolePermissions" Relationship="HTModel.FK_RolePermissions_Permission" FromRole="Permission" ToRole="RolePermission" />
-          <NavigationProperty Name="VipUserPermissions" Relationship="HTModel.FK_VipUserPermission_Permission" FromRole="Permission" ToRole="VipUserPermission" />
+          <NavigationProperty Name="RolePermissions" Relationship="tang_poetryModel.FK_RolePermissions_Permission" FromRole="Permission" ToRole="RolePermission" />
+          <NavigationProperty Name="VipUserPermissions" Relationship="tang_poetryModel.FK_VipUserPermission_Permission" FromRole="Permission" ToRole="VipUserPermission" />
         </EntityType>
         <EntityType Name="RolePermission">
           <Key>
@@ -308,8 +548,7 @@
           <Property Name="IsDel" Type="Boolean" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
           <Property Name="DepartMentID" Type="Int32" />
-          <NavigationProperty Name="Permission" Relationship="HTModel.FK_RolePermissions_Permission" FromRole="RolePermission" ToRole="Permission" />
-          <NavigationProperty Name="Role" Relationship="HTModel.FK_RolePermissions_Roles" FromRole="RolePermission" ToRole="Role" />
+          <NavigationProperty Name="Permission" Relationship="tang_poetryModel.FK_RolePermissions_Permission" FromRole="RolePermission" ToRole="Permission" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -323,8 +562,7 @@
           <Property Name="IsShow" Type="Boolean" />
           <Property Name="IsDel" Type="Boolean" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="RolePermissions" Relationship="HTModel.FK_RolePermissions_Roles" FromRole="Role" ToRole="RolePermission" />
-          <NavigationProperty Name="UserRoles" Relationship="HTModel.UserRole_Roles" FromRole="Role" ToRole="UserRole" />
+          <NavigationProperty Name="UserRoles" Relationship="tang_poetryModel.UserRole_Roles" FromRole="Role" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="UserDB">
           <Key>
@@ -352,9 +590,9 @@
           <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DepartID" Type="Int32" />
-          <NavigationProperty Name="Department" Relationship="HTModel.FK_UserDB_DepartMent" FromRole="UserDB" ToRole="Department" />
-          <NavigationProperty Name="VipUserPermissions" Relationship="HTModel.FK_VipUserPermission_UserDB" FromRole="UserDB" ToRole="VipUserPermission" />
-          <NavigationProperty Name="UserRoles" Relationship="HTModel.UserRole_UserDB" FromRole="UserDB" ToRole="UserRole" />
+          <NavigationProperty Name="Department" Relationship="tang_poetryModel.FK_UserDB_DepartMent" FromRole="UserDB" ToRole="Department" />
+          <NavigationProperty Name="VipUserPermissions" Relationship="tang_poetryModel.FK_VipUserPermission_UserDB" FromRole="UserDB" ToRole="VipUserPermission" />
+          <NavigationProperty Name="UserRoles" Relationship="tang_poetryModel.UserRole_UserDB" FromRole="UserDB" ToRole="UserRole" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
@@ -365,8 +603,8 @@
           <Property Name="RoleID" Type="Int32" />
           <Property Name="IsDel" Type="Boolean" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Role" Relationship="HTModel.UserRole_Roles" FromRole="UserRole" ToRole="Role" />
-          <NavigationProperty Name="UserDB" Relationship="HTModel.UserRole_UserDB" FromRole="UserRole" ToRole="UserDB" />
+          <NavigationProperty Name="Role" Relationship="tang_poetryModel.UserRole_Roles" FromRole="UserRole" ToRole="Role" />
+          <NavigationProperty Name="UserDB" Relationship="tang_poetryModel.UserRole_UserDB" FromRole="UserRole" ToRole="UserDB" />
         </EntityType>
         <EntityType Name="VipUserPermission">
           <Key>
@@ -378,12 +616,12 @@
           <Property Name="Remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IsDel" Type="Boolean" />
           <Property Name="AddTime" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Permission" Relationship="HTModel.FK_VipUserPermission_Permission" FromRole="VipUserPermission" ToRole="Permission" />
-          <NavigationProperty Name="UserDB" Relationship="HTModel.FK_VipUserPermission_UserDB" FromRole="VipUserPermission" ToRole="UserDB" />
+          <NavigationProperty Name="Permission" Relationship="tang_poetryModel.FK_VipUserPermission_Permission" FromRole="VipUserPermission" ToRole="Permission" />
+          <NavigationProperty Name="UserDB" Relationship="tang_poetryModel.FK_VipUserPermission_UserDB" FromRole="VipUserPermission" ToRole="UserDB" />
         </EntityType>
         <Association Name="FK_UserDB_DepartMent">
-          <End Type="HTModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="HTModel.UserDB" Role="UserDB" Multiplicity="*" />
+          <End Type="tang_poetryModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="tang_poetryModel.UserDB" Role="UserDB" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentID" />
@@ -394,8 +632,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RolePermissions_Permission">
-          <End Type="HTModel.Permission" Role="Permission" Multiplicity="0..1" />
-          <End Type="HTModel.RolePermission" Role="RolePermission" Multiplicity="*" />
+          <End Type="tang_poetryModel.Permission" Role="Permission" Multiplicity="0..1" />
+          <End Type="tang_poetryModel.RolePermission" Role="RolePermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Permission">
               <PropertyRef Name="PermissionID" />
@@ -406,8 +644,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VipUserPermission_Permission">
-          <End Type="HTModel.Permission" Role="Permission" Multiplicity="0..1" />
-          <End Type="HTModel.VipUserPermission" Role="VipUserPermission" Multiplicity="*" />
+          <End Type="tang_poetryModel.Permission" Role="Permission" Multiplicity="0..1" />
+          <End Type="tang_poetryModel.VipUserPermission" Role="VipUserPermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Permission">
               <PropertyRef Name="PermissionID" />
@@ -417,21 +655,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolePermissions_Roles">
-          <End Type="HTModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="HTModel.RolePermission" Role="RolePermission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="RoleID" />
-            </Principal>
-            <Dependent Role="RolePermission">
-              <PropertyRef Name="RoleID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UserRole_Roles">
-          <End Type="HTModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="HTModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <End Type="tang_poetryModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="tang_poetryModel.UserRole" Role="UserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="RoleID" />
@@ -442,8 +668,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_VipUserPermission_UserDB">
-          <End Type="HTModel.UserDB" Role="UserDB" Multiplicity="0..1" />
-          <End Type="HTModel.VipUserPermission" Role="VipUserPermission" Multiplicity="*" />
+          <End Type="tang_poetryModel.UserDB" Role="UserDB" Multiplicity="0..1" />
+          <End Type="tang_poetryModel.VipUserPermission" Role="VipUserPermission" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserDB">
               <PropertyRef Name="UserID" />
@@ -454,8 +680,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="UserRole_UserDB">
-          <End Type="HTModel.UserDB" Role="UserDB" Multiplicity="0..1" />
-          <End Type="HTModel.UserRole" Role="UserRole" Multiplicity="*" />
+          <End Type="tang_poetryModel.UserDB" Role="UserDB" Multiplicity="0..1" />
+          <End Type="tang_poetryModel.UserRole" Role="UserRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserDB">
               <PropertyRef Name="UserID" />
@@ -465,14 +691,59 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="HTModelStoreContainer" CdmEntityContainer="HTEntities">
+        <EntityContainerMapping StorageEntityContainer="tang_poetryModelStoreContainer" CdmEntityContainer="tang_poetryEntities">
+          <EntitySetMapping Name="Poets">
+            <EntityTypeMapping TypeName="tang_poetryModel.Poet">
+              <MappingFragment StoreEntitySet="Poet">
+                <ScalarProperty Name="PoetID" ColumnName="PoetID" />
+                <ScalarProperty Name="PoetName" ColumnName="PoetName" />
+                <ScalarProperty Name="PoetImg" ColumnName="PoetImg" />
+                <ScalarProperty Name="PoetBirthDay" ColumnName="PoetBirthDay" />
+                <ScalarProperty Name="PoetDieDay" ColumnName="PoetDieDay" />
+                <ScalarProperty Name="PoetBrife" ColumnName="PoetBrife" />
+                <ScalarProperty Name="poetryID" ColumnName="poetryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Poetries">
+            <EntityTypeMapping TypeName="tang_poetryModel.Poetry">
+              <MappingFragment StoreEntitySet="Poetry">
+                <ScalarProperty Name="PoetryID" ColumnName="PoetryID" />
+                <ScalarProperty Name="PoetryName" ColumnName="PoetryName" />
+                <ScalarProperty Name="PoetryContent" ColumnName="PoetryContent" />
+                <ScalarProperty Name="PoetryImg" ColumnName="PoetryImg" />
+                <ScalarProperty Name="SubsectionID" ColumnName="SubsectionID" />
+                <ScalarProperty Name="PoetID" ColumnName="PoetID" />
+                <ScalarProperty Name="VolumeID" ColumnName="VolumeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subsections">
+            <EntityTypeMapping TypeName="tang_poetryModel.Subsection">
+              <MappingFragment StoreEntitySet="Subsection">
+                <ScalarProperty Name="SubsectionID" ColumnName="SubsectionID" />
+                <ScalarProperty Name="SubsectionName" ColumnName="SubsectionName" />
+                <ScalarProperty Name="VolumeID" ColumnName="VolumeID" />
+                <ScalarProperty Name="PoetID" ColumnName="PoetID" />
+                <ScalarProperty Name="PoetryID" ColumnName="PoetryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Volumes">
+            <EntityTypeMapping TypeName="tang_poetryModel.Volume">
+              <MappingFragment StoreEntitySet="Volume">
+                <ScalarProperty Name="VolumeID" ColumnName="VolumeID" />
+                <ScalarProperty Name="VolumeName" ColumnName="VolumeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="HTModel.Department">
+            <EntityTypeMapping TypeName="tang_poetryModel.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
@@ -480,7 +751,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Permissions">
-            <EntityTypeMapping TypeName="HTModel.Permission">
+            <EntityTypeMapping TypeName="tang_poetryModel.Permission">
               <MappingFragment StoreEntitySet="Permission">
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
@@ -502,7 +773,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RolePermissions">
-            <EntityTypeMapping TypeName="HTModel.RolePermission">
+            <EntityTypeMapping TypeName="tang_poetryModel.RolePermission">
               <MappingFragment StoreEntitySet="RolePermissions">
                 <ScalarProperty Name="DepartMentID" ColumnName="DepartMentID" />
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
@@ -514,7 +785,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="HTModel.Role">
+            <EntityTypeMapping TypeName="tang_poetryModel.Role">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
@@ -528,7 +799,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserDBs">
-            <EntityTypeMapping TypeName="HTModel.UserDB">
+            <EntityTypeMapping TypeName="tang_poetryModel.UserDB">
               <MappingFragment StoreEntitySet="UserDB">
                 <ScalarProperty Name="DepartID" ColumnName="DepartID" />
                 <ScalarProperty Name="City" ColumnName="City" />
@@ -556,7 +827,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRoles">
-            <EntityTypeMapping TypeName="HTModel.UserRole">
+            <EntityTypeMapping TypeName="tang_poetryModel.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
@@ -567,7 +838,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VipUserPermissions">
-            <EntityTypeMapping TypeName="HTModel.VipUserPermission">
+            <EntityTypeMapping TypeName="tang_poetryModel.VipUserPermission">
               <MappingFragment StoreEntitySet="VipUserPermission">
                 <ScalarProperty Name="AddTime" ColumnName="AddTime" />
                 <ScalarProperty Name="IsDel" ColumnName="IsDel" />
@@ -592,8 +863,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
       </DesignerInfoPropertySet>

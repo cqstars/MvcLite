@@ -17,7 +17,8 @@ namespace Model
         {
             Permission poco = new Permission()
             {
-                PermissionID= this.PermissionID,
+                
+                PermissionID = this.PermissionID,
                 Parent = this.Parent,
                 Name = this.Name,
                 AreaName = this.AreaName,
@@ -26,7 +27,7 @@ namespace Model
                 FormMethod = this.FormMethod,
                 OperationType = this.OperationType,
                 Ico = this.Ico,
-               PerMissionOrder = this.PerMissionOrder,
+                PerMissionOrder = this.PerMissionOrder,
                 IsLink = this.IsLink,
                 LinkUrl = this.LinkUrl,
                 IsShow = this.IsShow,

@@ -320,13 +320,20 @@
     <Content Include="bin\zh-Hans\System.Web.WebPages.Deployment.resources.dll" />
     <Content Include="bin\zh-Hans\System.Web.WebPages.Razor.resources.dll" />
     <Content Include="bin\zh-Hans\System.Web.WebPages.resources.dll" />
+    <Content Include="bootstrap3-editable\css\bootstrap-editable.css" />
+    <Content Include="bootstrap3-editable\img\clear.png" />
+    <Content Include="bootstrap3-editable\img\loading.gif" />
+    <Content Include="bootstrap3-editable\js\bootstrap-editable.js" />
+    <Content Include="bootstrap3-editable\js\bootstrap-editable.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\HayTnStyle.css" />
     <Content Include="Content\MyStely.css" />
+    <Content Include="Content\pageinit.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\iconfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -367,7 +374,15 @@
     <Content Include="bin\WebUI.dll.config" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\WebUI.csprojResolveAssemblyReference.cache" />
+    <Content Include="Scripts\mustache.min.js" />
+    <Content Include="Scripts\pagination.js" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Areas\HayTnAdmin\Views\Poet\index.cshtml" />
+    <Content Include="Areas\HayTnAdmin\Views\Shared\VolumeAdmin.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Properties\PublishProfiles\Ht.pubxml" />
     <None Include="Properties\PublishProfiles\HTPublish.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -432,7 +447,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\HayTnAdmin\Views\Shared\" />
     <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="obj\Release\" />
   </ItemGroup>

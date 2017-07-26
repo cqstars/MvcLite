@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="83216b574f4f49e08c6d55203ff61dd7" Name="Diagram1">
+        <EntityTypeShape EntityType="tang_poetryModel.Poet" Width="1.5" PointX="7" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="tang_poetryModel.Poetry" Width="1.5" PointX="3.375" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="tang_poetryModel.Subsection" Width="1.5" PointX="10.625" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="tang_poetryModel.Volume" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="tang_poetryModel.FK_Poetry_Poet" ManuallyRouted="false" />
+        <AssociationConnector Association="tang_poetryModel.FK_Subsection_Poet" ManuallyRouted="false" />
+        <AssociationConnector Association="tang_poetryModel.FK_Poetry_Subsection" ManuallyRouted="false" />
+        <AssociationConnector Association="tang_poetryModel.FK_Poetry_Volume" ManuallyRouted="false" />
+        <AssociationConnector Association="tang_poetryModel.FK_Subsection_Volume" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="tang_poetryModel.Department" Width="1.5" PointX="0.75" PointY="11.25" />
+        <EntityTypeShape EntityType="tang_poetryModel.Permission" Width="1.5" PointX="3" PointY="15.75" />
+        <EntityTypeShape EntityType="tang_poetryModel.RolePermission" Width="1.5" PointX="5.25" PointY="18.875" />
+        <EntityTypeShape EntityType="tang_poetryModel.Role" Width="1.5" PointX="6" PointY="14.625" />
+        <EntityTypeShape EntityType="tang_poetryModel.UserDB" Width="1.5" PointX="3" PointY="9.125" />
+        <EntityTypeShape EntityType="tang_poetryModel.UserRole" Width="1.5" PointX="8.25" PointY="10.875" />
+        <EntityTypeShape EntityType="tang_poetryModel.VipUserPermission" Width="1.5" PointX="5.25" PointY="10.75" />
+        <AssociationConnector Association="tang_poetryModel.FK_UserDB_DepartMent" />
+        <AssociationConnector Association="tang_poetryModel.FK_RolePermissions_Permission" />
+        <AssociationConnector Association="tang_poetryModel.FK_VipUserPermission_Permission" />
+        <AssociationConnector Association="tang_poetryModel.UserRole_Roles" />
+        <AssociationConnector Association="tang_poetryModel.FK_VipUserPermission_UserDB" />
+        <AssociationConnector Association="tang_poetryModel.UserRole_UserDB" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

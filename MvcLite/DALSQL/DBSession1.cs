@@ -43,7 +43,41 @@ namespace DALSQL
 		}
 		#endregion
 
-		#region 03 数据接口 IRoleDAL
+		#region 03 数据接口 IPoetDAL
+		IPoetDAL iPoetDAL;
+		public IPoetDAL IPoetDAL
+		{
+			get
+			{
+				if(iPoetDAL==null)
+					iPoetDAL= new PoetDAL();
+				return iPoetDAL;
+			}
+			set
+			{
+				iPoetDAL= value;
+			}
+		}
+		#endregion
+
+		#region 04 数据接口 IPoetryDAL
+		IPoetryDAL iPoetryDAL;
+		public IPoetryDAL IPoetryDAL
+		{
+			get
+			{
+				if(iPoetryDAL==null)
+					iPoetryDAL= new PoetryDAL();
+				return iPoetryDAL;
+			}
+			set
+			{
+				iPoetryDAL= value;
+			}
+		}
+		#endregion
+
+		#region 05 数据接口 IRoleDAL
 		IRoleDAL iRoleDAL;
 		public IRoleDAL IRoleDAL
 		{
@@ -60,7 +94,7 @@ namespace DALSQL
 		}
 		#endregion
 
-		#region 04 数据接口 IRolePermissionDAL
+		#region 06 数据接口 IRolePermissionDAL
 		IRolePermissionDAL iRolePermissionDAL;
 		public IRolePermissionDAL IRolePermissionDAL
 		{
@@ -77,7 +111,24 @@ namespace DALSQL
 		}
 		#endregion
 
-		#region 05 数据接口 IUserDBDAL
+		#region 07 数据接口 ISubsectionDAL
+		ISubsectionDAL iSubsectionDAL;
+		public ISubsectionDAL ISubsectionDAL
+		{
+			get
+			{
+				if(iSubsectionDAL==null)
+					iSubsectionDAL= new SubsectionDAL();
+				return iSubsectionDAL;
+			}
+			set
+			{
+				iSubsectionDAL= value;
+			}
+		}
+		#endregion
+
+		#region 08 数据接口 IUserDBDAL
 		IUserDBDAL iUserDBDAL;
 		public IUserDBDAL IUserDBDAL
 		{
@@ -94,7 +145,7 @@ namespace DALSQL
 		}
 		#endregion
 
-		#region 06 数据接口 IUserRoleDAL
+		#region 09 数据接口 IUserRoleDAL
 		IUserRoleDAL iUserRoleDAL;
 		public IUserRoleDAL IUserRoleDAL
 		{
@@ -111,7 +162,7 @@ namespace DALSQL
 		}
 		#endregion
 
-		#region 07 数据接口 IVipUserPermissionDAL
+		#region 10 数据接口 IVipUserPermissionDAL
 		IVipUserPermissionDAL iVipUserPermissionDAL;
 		public IVipUserPermissionDAL IVipUserPermissionDAL
 		{
@@ -124,6 +175,23 @@ namespace DALSQL
 			set
 			{
 				iVipUserPermissionDAL= value;
+			}
+		}
+		#endregion
+
+		#region 11 数据接口 IVolumeDAL
+		IVolumeDAL iVolumeDAL;
+		public IVolumeDAL IVolumeDAL
+		{
+			get
+			{
+				if(iVolumeDAL==null)
+					iVolumeDAL= new VolumeDAL();
+				return iVolumeDAL;
+			}
+			set
+			{
+				iVolumeDAL= value;
 			}
 		}
 		#endregion

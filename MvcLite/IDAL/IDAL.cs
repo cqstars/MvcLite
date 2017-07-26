@@ -6,13 +6,19 @@ using System.Text;
 using Model;
 namespace IDAL
 {
-    
 	public partial interface IDepartmentDAL : IBaseDAL<Model.Department>
     {
-        
     }
 
 	public partial interface IPermissionDAL : IBaseDAL<Model.Permission>
+    {
+    }
+
+	public partial interface IPoetDAL : IBaseDAL<Model.Poet>
+    {
+    }
+
+	public partial interface IPoetryDAL : IBaseDAL<Model.Poetry>
     {
     }
 
@@ -21,6 +27,10 @@ namespace IDAL
     }
 
 	public partial interface IRolePermissionDAL : IBaseDAL<Model.RolePermission>
+    {
+    }
+
+	public partial interface ISubsectionDAL : IBaseDAL<Model.Subsection>
     {
     }
 
@@ -33,6 +43,10 @@ namespace IDAL
     }
 
 	public partial interface IVipUserPermissionDAL : IBaseDAL<Model.VipUserPermission>
+    {
+    }
+
+	public partial interface IVolumeDAL : IBaseDAL<Model.Volume>
     {
     }
 

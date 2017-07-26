@@ -20,7 +20,7 @@ namespace DALSQL
             DbContext dbContext = CallContext.GetData(typeof(DBContextFactory).Name) as DbContext;
             if (dbContext == null)
             {
-                dbContext = new Model.HTEntities();
+                dbContext = new Model.tang_poetryEntities();
                 CallContext.SetData(typeof(DBContextFactory).Name, dbContext);
             }
             return dbContext;

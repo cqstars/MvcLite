@@ -4,7 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title海顿物联网管理系统</title>
+    <title>@ViewBag.Title国学堂</title>
     @Styles.Render("~/BootStarp/CSS")
     @Scripts.Render("~/BootStrap/js")
     <script src="~/Scripts/iconfont.js"></script>
@@ -20,7 +20,7 @@
                 </button>
                 <a class="navbar-brand" href="/"><svg class="icon" style="vertical-align: -0.55em;" aria-hidden="true">
     <use xlink:href="#icon-icon-test1"></use>
-</svg>海顿物联网管理系统</a>
+</svg>全唐诗</a>
 
                 @*@Html.ActionLink("海顿物联网管理系统", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
@@ -35,6 +35,7 @@
         </div>
     </div>
     <div class="container body-content">
+        @RenderSection("SubMenu", false)
         @RenderBody()
         <hr />
 
@@ -49,18 +50,16 @@
                     <address>
                         <svg class="icon text-danger" aria-hidden="true">
                             <use xlink:href="#icon-diqiu"></use>
-                        </svg> <strong>重庆海顿科技有限公司 </strong><br>
+                        </svg> <strong>重庆圣天数码</strong><br>
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-shouji"></use>
                         </svg>
-                        <abbr title="Phone">联系人：向先生&nbsp;&nbsp;手机：1363-7777-865</abbr><br>
-                        <svg class="icon text-primary" aria-hidden="true">
-                            <use xlink:href="#icon-dianhua"></use>
-                        </svg> 电话： 023-传真：023-<br />
+                        <abbr title="Phone">联系人：彭先生&nbsp;&nbsp;手机：153-101-67836</abbr><br>
+                        
 
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-youjian"></use>
-                        </svg><a href="mailto:#">20634529@qq.com</a><br />
+                        </svg><a href="mailto:#">15266320@qq.com</a><br />
                         <svg class="icon text-success" aria-hidden="true">
                             <use xlink:href="#icon-dizhi"></use>
                         </svg>重庆市九龙坡区石桥铺华宇名都29号楼
@@ -81,7 +80,7 @@
                         </ul>
 
 
-                        <p>Copyright©&nbsp;&nbsp;All Rights Reserved&nbsp;&nbsp;<a href="http://www.cqgdbg.com/">海顿科技</a></p>
+                        <p>Copyright©&nbsp;&nbsp;All Rights Reserved&nbsp;&nbsp;<a href="http://www.cqgdbg.com/">圣天数码</a></p>
                         <p>渝ICP备12002506号-5</p>
                         <!--<a href="javascript{void(0)}"></a>-->
                     </div>

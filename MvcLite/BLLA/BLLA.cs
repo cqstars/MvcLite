@@ -19,6 +19,20 @@ namespace BLLA
 			idal = DBSession.IPermissionDAL;
 		}
     }
+	public partial class Poet : BaseBLL<Model.Poet>,IBLL.IPoetBLL
+    {
+		public override void SetDAL()
+		{
+			idal = DBSession.IPoetDAL;
+		}
+    }
+	public partial class Poetry : BaseBLL<Model.Poetry>,IBLL.IPoetryBLL
+    {
+		public override void SetDAL()
+		{
+			idal = DBSession.IPoetryDAL;
+		}
+    }
 	public partial class Role : BaseBLL<Model.Role>,IBLL.IRoleBLL
     {
 		public override void SetDAL()
@@ -31,6 +45,13 @@ namespace BLLA
 		public override void SetDAL()
 		{
 			idal = DBSession.IRolePermissionDAL;
+		}
+    }
+	public partial class Subsection : BaseBLL<Model.Subsection>,IBLL.ISubsectionBLL
+    {
+		public override void SetDAL()
+		{
+			idal = DBSession.ISubsectionDAL;
 		}
     }
 	public partial class UserDB : BaseBLL<Model.UserDB>,IBLL.IUserDBBLL
@@ -52,6 +73,13 @@ namespace BLLA
 		public override void SetDAL()
 		{
 			idal = DBSession.IVipUserPermissionDAL;
+		}
+    }
+	public partial class Volume : BaseBLL<Model.Volume>,IBLL.IVolumeBLL
+    {
+		public override void SetDAL()
+		{
+			idal = DBSession.IVolumeDAL;
 		}
     }
 }
